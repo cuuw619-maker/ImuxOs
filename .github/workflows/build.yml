@@ -1,0 +1,29 @@
+name: Build ImuxOS
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ binutils grub-pc-bin grub-efi-amd64-bin xorriso mtools
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --target iso
+      - name: Validate ISO
+        run: |
+          test -s build/ImuxOS.iso
+          file build/ImuxOS.iso
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: ImuxOS-x86_64-ISO
+          path: build/ImuxOS.iso
+          if-no-files-found: error
