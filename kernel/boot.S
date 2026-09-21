@@ -3,8 +3,8 @@
 mb2_header_start:
 .long 0xe85250d6
 .long 0
-.long mb2_header_end - mb2_header_start
-.long -(0xe85250d6 + 0 + (mb2_header_end - mb2_header_start))
+.long 44
+.long 0x17adaefe
 
 # Request a 1024x768x32 framebuffer from GRUB.
 .word 5
@@ -40,12 +40,12 @@ _start:
     movw %ax, %ss
 
     # Identity-map the first 4 GiB with 2 MiB pages.
-    movl $pml4_table, %eax
-    movl %eax, %cr3
-
     movl %cr4, %eax
     orl $0x20, %eax
     movl %eax, %cr4
+
+    movl $pml4_table, %eax
+    movl %eax, %cr3
 
     # Enable EFER.LME.
     movl $0xC0000080, %ecx
