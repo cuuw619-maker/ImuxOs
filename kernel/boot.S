@@ -22,6 +22,23 @@ mb2_header_end:
 .type _start, @function
 _start:
     cli
+    mov $0xB8000, %rax
+    movw $0x0F49, (%rax)
+    movw $0x0F4D, 2(%rax)
+    movw $0x0F55, 4(%rax)
+    movw $0x0F58, 6(%rax)
+    movw $0x0F42, 8(%rax)
+    movw $0x0F4F, 10(%rax)
+    movw $0x0F4F, 12(%rax)
+    movw $0x0F54, 14(%rax)
+    movw $0x0F3A, 16(%rax)
+    movw $0x0F20, 18(%rax)
+    movw $0x0F45, 20(%rax)
+    movw $0x0F4E, 22(%rax)
+    movw $0x0F54, 24(%rax)
+    movw $0x0F52, 26(%rax)
+    movw $0x0F59, 28(%rax)
+
     lea stack_top(%rip), %rsp
     xor %rbp, %rbp
     mov %ebx, %edi
