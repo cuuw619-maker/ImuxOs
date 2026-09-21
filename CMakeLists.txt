@@ -12,5 +12,6 @@ add_custom_target(iso ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/iso/boot/grub
   COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:imux_kernel> ${CMAKE_BINARY_DIR}/iso/boot/kernel.elf
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/grub/grub.cfg ${CMAKE_BINARY_DIR}/iso/boot/grub/grub.cfg
+  COMMAND grub-file --is-x86-multiboot2 ${CMAKE_BINARY_DIR}/iso/boot/kernel.elf
   COMMAND grub-mkrescue -o ${CMAKE_BINARY_DIR}/ImuxOS.iso ${CMAKE_BINARY_DIR}/iso
   DEPENDS imux_kernel VERBATIM)
